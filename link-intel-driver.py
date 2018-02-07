@@ -10,14 +10,14 @@ try:
     # get the locations of directories
     print "\n" + \
           "*****************************************************************\n" + \
-          "Make sure you have downloaded and installed the Intel sgx driver \n" + \
+          "Make sure you have downloaded and installed the Intel SGX driver \n" + \
           "from https://github.com/01org/linux-sgx-driver.\n" + \
           "*****************************************************************\n" + \
           "\n"
 
     while True:
         if not isgx_path:
-            isgx_path = raw_input('Enter the Intel SGX driver derctory: ')
+            isgx_path = raw_input('Enter the Intel SGX driver directory: ')
         if os.path.exists(isgx_path + '/sgx.h'):
             break
         if os.path.exists(isgx_path + '/isgx.h'):
