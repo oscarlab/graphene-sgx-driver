@@ -18,6 +18,7 @@
 
 #if SDK_DRIVER_VERSION > KERNEL_VERSION(1, 8, 0)
 #include "linux-sgx-driver/sgx_user.h"
+#define SGX_INVALID_LICENSE SGX_INVALID_EINITTOKEN
 #else // 1.8
 #include "linux-sgx-driver/isgx_user.h"
 #endif 
