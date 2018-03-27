@@ -16,12 +16,23 @@
 #define __packed __attribute__((packed))
 #endif
 
-#if SDK_DRIVER_VERSION > KERNEL_VERSION(1, 8, 0)
+#if SDK_DRIVER_VERSION >= KERNEL_VERSION(1, 9, 0)
+/*
+ * isgx_user.h renamed as sgx_user.h in SGX driver 1.9:
+ * https://github.com/intel/linux-sgx-driver/commit/45c139d4a824091b3923d5677ae8794e9d45abc0
+ */
 #include "linux-sgx-driver/sgx_user.h"
-#define SGX_INVALID_LICENSE SGX_INVALID_EINITTOKEN
-#else // 1.8
+#else
 #include "linux-sgx-driver/isgx_user.h"
-#endif 
+#endif
+
+#if SDK_DRIVER_VERSION >= KERNEL_VERSION(2, 1, 0)
+/*
+ * SGX_INVALID_LICENSE renamed to SGX_INVALID_EINITTOKEN in SGX driver 2.1:
+ * https://github.com/intel/linux-sgx-driver/commit/a7997dafe184d7d527683d8d46c4066db205758d
+ */
+#define SGX_INVALID_LICENSE SGX_INVALID_EINITTOKEN
+#endif
 
 #else // SDK_DRIVER_VERSION < KERNEL_VERSION(1, 8, 0)
 

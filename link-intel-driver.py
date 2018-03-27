@@ -29,7 +29,7 @@ try:
     # get the driver version
     while True:
         if not isgx_version:
-            isgx_version = raw_input('Enter the driver version (default: 1.9, 1.9 means "1.9 and above"): ')
+            isgx_version = raw_input('Enter the driver version (default: 1.9): ')
         if not isgx_version:
             isgx_version_major = 1
             isgx_version_minor = 9
