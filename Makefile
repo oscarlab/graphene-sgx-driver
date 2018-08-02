@@ -17,6 +17,8 @@ install: default
 	$(MAKE) INSTALL_MOD_DIR=kernel/drivers/graphene -C $(KDIR) M=$(PWD) modules_install
 	sh -c "cat /etc/modules | grep -Fxq graphene_sgx || echo graphene_sgx >> /etc/modules"
 	/sbin/depmod
+	sh -c "cat /etc/rc.local | grep -Fxq \"sysctl vm.mmap_min_addr=0\" || sed -ie '/^exit 0/i sysctl vm.mmap_min_addr=0' /etc/rc.local"
+
 
 .INTERMEDIATE: link-sgx-driver
 link-sgx-driver:
