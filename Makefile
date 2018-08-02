@@ -13,6 +13,11 @@ PWD  := $(shell pwd)
 default: isgx_version.h linux-sgx-driver
 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) CFLAGS_MODULE="-DDEBUG -g -O0" modules
 
+install: default
+	$(MAKE) INSTALL_MOD_DIR=kernel/drivers/graphene -C $(KDIR) M=$(PWD) modules_install
+	sh -c "cat /etc/modules | grep -Fxq graphene_sgx || echo graphene_sgx >> /etc/modules"
+	/sbin/depmod
+
 .INTERMEDIATE: link-sgx-driver
 link-sgx-driver:
 	@./link-intel-driver.py
