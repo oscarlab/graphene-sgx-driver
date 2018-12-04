@@ -26,12 +26,16 @@
 #include "linux-sgx-driver/isgx_user.h"
 #endif
 
-#if SDK_DRIVER_VERSION >= KERNEL_VERSION(2, 1, 0)
 /*
  * SGX_INVALID_LICENSE renamed to SGX_INVALID_EINITTOKEN in SGX driver 2.1:
  * https://github.com/intel/linux-sgx-driver/commit/a7997dafe184d7d527683d8d46c4066db205758d
  */
-#define SGX_INVALID_LICENSE SGX_INVALID_EINITTOKEN
+#ifndef SGX_INVALID_LICENSE
+# ifndef SGX_INVALID_EINITTOKEN
+#  error "sgx_user.h version mismatch? Please verify linux sgx driver version."
+# else
+#  define SGX_INVALID_LICENSE SGX_INVALID_EINITTOKEN
+# endif
 #endif
 
 #else // SDK_DRIVER_VERSION < KERNEL_VERSION(1, 8, 0)
