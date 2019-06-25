@@ -11,7 +11,7 @@ PWD  := $(shell pwd)
 
 .PHONY: default
 default: isgx_version.h linux-sgx-driver
-	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) CFLAGS_MODULE="-DDEBUG -g -O0" modules
+	$(MAKE) -C $(KDIR) M=$(PWD) CFLAGS_MODULE="-DDEBUG -g -O0" modules
 
 .INTERMEDIATE: link-sgx-driver
 link-sgx-driver:
