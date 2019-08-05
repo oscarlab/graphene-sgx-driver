@@ -1,6 +1,7 @@
 *.o.cmd
 *.ko.cmd
 *.o
+*.o.ur-safe
 *.ko
 *.mod.c
 Module.symvers
