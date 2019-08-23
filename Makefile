@@ -24,4 +24,4 @@ endif
 .PHONY: clean
 clean:
 	rm -vrf linux-sgx-driver isgx_version.h
-	rm -vrf *.o *.ko *.order *.symvers *.mod.c .tmp_versions .*o.cmd
+	rm -vrf *.o *.ko *.order *.symvers *.mod.c .tmp_versions .*o.cmd .cache.mk *.o.ur-safe
