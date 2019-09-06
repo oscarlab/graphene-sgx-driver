@@ -60,6 +60,13 @@ try:
         os.unlink(isgx_link)
     os.symlink(isgx_path, isgx_link)
 
+    # check if the driver is DCAP
+    dcap_driver = False
+    sgx_main_path = '{}/sgx_main.c'.format(isgx_link)
+    if os.path.exists(sgx_main_path):
+        with open(sgx_main_path, 'r') as f:
+            if 'X86_FEATURE_SGX_LC' in f.read():
+                dcap_driver = True
 
     # create isgx_version.h
     with open('isgx_version.h', 'w') as versionfile:
@@ -72,6 +79,16 @@ try:
         print >> versionfile, '#define SDK_DRIVER_VERSION_STRING "' + \
                               str(isgx_version_major) + '.' + \
                               str(isgx_version_minor) + '"'
+        if dcap_driver:
+            print >> versionfile, '#define SGX_DCAP'
+
+    with open('load.sh', 'w') as loadsh:
+        print >> loadsh, '#!/bin/bash'
+        print >> loadsh, 'source $(dirname "$0")/load_func.sh'
+        if dcap_driver:
+            print >> loadsh, 'load_sgx_dcap_driver'
+        else:
+            print >> loadsh, 'load_sgx_driver'
 
 except:
     print 'uh-oh: {0}'.format(sys.exc_info()[0])
