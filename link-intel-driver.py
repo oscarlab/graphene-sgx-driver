@@ -80,7 +80,7 @@ try:
                               str(isgx_version_major) + '.' + \
                               str(isgx_version_minor) + '"'
         if dcap_driver:
-            print >> versionfile, '#define SGX_DCAP'
+            print >> versionfile, '#define SGX_DCAP 1'
 
     with open('load.sh', 'w') as loadsh:
         print >> loadsh, '#!/bin/bash'
