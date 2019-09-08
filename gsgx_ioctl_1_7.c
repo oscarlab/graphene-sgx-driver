@@ -75,7 +75,10 @@ static long enclave_init(struct file *filep, void * arg)
 
 	isgx_init.addr = initp->addr;
 	isgx_init.sigstruct = initp->sigstruct;
+
+#ifndef SGX_DCAP
 	isgx_init.einittoken = initp->einittoken;
+#endif
 
 	return KSYM(isgx_ioctl_enclave_init)(filep, SGX_IOC_ENCLAVE_INIT,
 					     (unsigned long) &isgx_init);
