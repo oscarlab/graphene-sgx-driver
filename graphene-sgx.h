@@ -66,9 +66,7 @@ struct gsgx_enclave_add_pages {
 struct gsgx_enclave_init {
 	uint64_t addr;
 	uint64_t sigstruct;
-#ifndef SGX_DCAP
 	uint64_t einittoken;
-#endif
 };
 
 #endif /* SDK_DRIVER_VERSION < KERNEL_VERSION(1, 8, 0) */
