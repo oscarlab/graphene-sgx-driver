@@ -8,6 +8,8 @@
  * of the License.
  */
 
+#define pr_fmt(fmt) "gsgx: " fmt
+
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/version.h>
@@ -50,7 +52,7 @@ static int gsgx_setup(void)
 
 	ret = misc_register(&gsgx_dev);
 	if (ret) {
-		pr_err("gsgx: misc_register() failed\n");
+		pr_err("misc_register() failed\n");
 		gsgx_dev.this_device = NULL;
 		return ret;
 	}
@@ -63,7 +65,7 @@ static int gsgx_setup(void)
 
 	ret = gsgx_lookup_ksyms();
 	if (ret) {
-		pr_err("gsgx: lookup kernel symbols failed\n");
+		pr_err("lookup kernel symbols failed\n");
 		return ret;
 	}
 #endif
@@ -86,7 +88,7 @@ static int __init gsgx_init(void)
 {
 	int ret;
 
-	pr_info("gsgx: " DRV_DESCRIPTION " v" DRV_VERSION "\n");
+	pr_info(DRV_DESCRIPTION " v" DRV_VERSION "\n");
 
 	ret = gsgx_setup();
 	if (ret) {
