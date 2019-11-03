@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, os, re, readline, subprocess
+import sys, os, re, subprocess
 
 isgx_repo    = 'https://github.com/intel/linux-sgx-driver.git'
 isgx_path    = os.getenv("ISGX_DRIVER_PATH")
