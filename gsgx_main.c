@@ -90,6 +90,11 @@ static int __init gsgx_init(void)
 
 	pr_info(DRV_DESCRIPTION " v" DRV_VERSION "\n");
 
+	if (!boot_cpu_has(X86_FEATURE_FSGSBASE)) {
+		pr_err("FSGSBASE feature required by Graphene-SGX is not supported by this CPU\n");
+		return -ENODEV;
+	}
+
 	ret = gsgx_setup();
 	if (ret) {
 		gsgx_teardown();
