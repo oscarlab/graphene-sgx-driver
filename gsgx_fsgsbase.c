@@ -31,7 +31,7 @@ static void __enable_fsgsbase(void *v)
 
 int gsgx_open(struct inode *inode, struct file *file)
 {
-	__enable_fsgsbase(NULL);
-	smp_call_function(__enable_fsgsbase, NULL, 1);
+	on_each_cpu(__enable_fsgsbase, NULL, 1);
+
 	return 0;
 }
