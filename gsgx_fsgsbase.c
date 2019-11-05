@@ -31,10 +31,7 @@ static void __enable_fsgsbase(void *v)
 
 int gsgx_open(struct inode *inode, struct file *file)
 {
-	preempt_disable();
-	__enable_fsgsbase(NULL);
-	smp_call_function(__enable_fsgsbase, NULL, 1);
-	preempt_enable();
+	on_each_cpu(__enable_fsgsbase, NULL, 1);
 
 	return 0;
 }
