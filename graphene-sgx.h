@@ -50,7 +50,7 @@
 
 struct gsgx_enclave_create {
 	uint64_t src;
-};
+} __packed;
 
 #define GSGX_ENCLAVE_ADD_PAGES_SKIP_EEXTEND	0x1
 #define GSGX_ENCLAVE_ADD_PAGES_REPEAT_SRC	0x2
@@ -61,13 +61,13 @@ struct gsgx_enclave_add_pages {
 	uint64_t user_addr;
 	uint64_t size;
 	uint64_t secinfo;
-};
+} __packed;
 
 struct gsgx_enclave_init {
 	uint64_t addr;
 	uint64_t sigstruct;
 	uint64_t einittoken;
-};
+} __packed;
 
 #endif /* SDK_DRIVER_VERSION < KERNEL_VERSION(1, 8, 0) */
 
