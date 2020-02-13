@@ -27,7 +27,7 @@ Intel SGX driver are:
 
 To install the Graphene SGX driver, please run::
 
-    sudo rmmod gsgx | true
-    sudo rmmod graphene_sgx | true
+    sudo rmmod gsgx || true
+    sudo rmmod graphene_sgx || true
     make
     sudo insmod gsgx.ko
