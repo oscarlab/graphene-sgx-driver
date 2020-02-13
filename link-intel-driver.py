@@ -1,71 +1,44 @@
 #!/usr/bin/env python3
 
-import sys, os, re, subprocess
+import sys, os, shutil
 
-isgx_repo    = 'https://github.com/intel/linux-sgx-driver.git'
-isgx_path    = os.getenv("ISGX_DRIVER_PATH")
-isgx_version = os.getenv("ISGX_DRIVER_VERSION")
+DRIVER_VERSIONS = {
+        'sgx_user.h':             '/dev/isgx',
+        'include/uapi/asm/sgx.h': '/dev/sgx',
+}
 
-try:
-    # get the locations of directories
-    print('''
-*****************************************************************"
-Make sure you have downloaded and installed the Intel SGX driver"
-from {0}."
-*****************************************************************
+def find_intel_sgx_driver():
+    """
+    Graphene only needs one header from the Intel SGX Driver:
+      - include/uapi/asm/sgx.h for DCAP version of the driver
+        (https://github.com/intel/SGXDataCenterAttestationPrimitives)
+      - sgx_user.h for non-DCAP, older version of the driver
+        (https://github.com/intel/linux-sgx-driver)
 
-'''.format(isgx_repo))
+    This function returns the required header from the SGX driver.
+    """
+    isgx_driver_path = os.getenv("ISGX_DRIVER_PATH")
+    if not isgx_driver_path:
+        isgx_driver_path = os.path.expanduser(input('Enter the Intel SGX driver dir with C headers: '))
 
-    while True:
-        if not isgx_path:
-            isgx_path = os.path.expanduser(input(
-                'Enter the Intel SGX driver directory (can be absolute/relative path, or start with ~ or ~USERNAME): '))
+    for header_path, dev_path in DRIVER_VERSIONS.items():
+        abs_header_path = os.path.abspath(os.path.join(isgx_driver_path, header_path))
+        if os.path.exists(abs_header_path):
+            return abs_header_path, dev_path
 
-            # clone the repo if not exist
-            if not os.path.exists(isgx_path):
-                iput = input(
-                    'directory {0} does not exist; clone the driver here? ([n]/y): '.format(isgx_path)).lower()
-                if iput == 'y':
-                    subprocess.check_call('git clone {0} {1}'.format(isgx_repo, isgx_path), shell=True)
+    raise Exception("Could not find the header from the Intel SGX Driver")
 
-        if os.path.exists(isgx_path + '/sgx.h'):
-            break
-        if os.path.exists(isgx_path + '/isgx.h'):
-            break
-        print('{0} is not a directory for the Intel SGX driver'.format(isgx_path))
-        isgx_path = None
 
-    # get the driver version
-    while True:
-        if not isgx_version:
-            isgx_version = input('Enter the driver version (default: 2.1+): ')
-        if not isgx_version:
-            isgx_version_major = 2
-            isgx_version_minor = 1
-            break
-        m = re.match('([1-9])\.([0-9]+)', isgx_version)
-        if m:
-            isgx_version_major = m.group(1)
-            isgx_version_minor = m.group(2)
-            break
-        print('{0} is not a valid version (x.xx)'.format(isgx_version))
-        isgx_version = None
+def main():
+    """ Find and copy header/device paths from Intel SGX Driver"""
+    header_path, dev_path = find_intel_sgx_driver()
 
-    # create a symbolic link called 'linux-sgx-driver'
-    isgx_link = 'linux-sgx-driver'
-    print(isgx_link + ' -> ' + isgx_path)
-    if os.path.exists(isgx_link):
-        os.unlink(isgx_link)
-    os.symlink(isgx_path, isgx_link)
+    this_header_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sgx.h')
+    shutil.copyfile(header_path, this_header_path)
 
-    # create isgx_version.h
-    with open('isgx_version.h', 'w') as versionfile:
-        print('create isgx_version.h')
-        print('''#include <linux/version.h>
+    with open(this_header_path, 'a') as f:
+        f.write('\n\n#ifndef ISGX_FILE\n#define ISGX_FILE "%s"\n#endif\n' % dev_path)
 
-#define SDK_DRIVER_VERSION KERNEL_VERSION({0}, {1}, 0)
-#define SDK_DRIVER_VERSION_STRING "{0}.{1}"'''.format(isgx_version_major, isgx_version_minor), file=versionfile)
 
-except:
-    print('uh-oh: {0}'.format(sys.exc_info()[0]))
-    exit(-1)
+if __name__ == "__main__":
+    sys.exit(main())
