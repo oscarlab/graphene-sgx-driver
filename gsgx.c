@@ -47,14 +47,8 @@ static void __disable_fsgsbase(void* v) {
 #endif
 }
 
-int gsgx_open(struct inode* inode, struct file* file) {
-    /* noop, only to prevent kernel from rmmod gsgx.ko */
-    return 0;
-}
-
 static const struct file_operations gsgx_fops = {
-    .owner = THIS_MODULE,
-    .open  = gsgx_open,
+    .owner = THIS_MODULE
 };
 
 static struct miscdevice gsgx_dev = {
