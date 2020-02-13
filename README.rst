@@ -12,7 +12,7 @@ This helper repository serves two purposes:
 - It contains the sources of the Graphene SGX driver (the GSGX driver).
 - It extracts the required C header from the Intel SGX driver (copied as ``sgx.h``).
 
-The Graphene SGX Driver is a Linux kernel module installed under `/dev/gsgx`. Its sole purpose is
+The Graphene SGX Driver is a Linux kernel module installed under ``/dev/gsgx``. Its sole purpose is
 to enable the ``FSGSBASE`` instruction in user space. Older Linux versions do not allow to enable
 this instruction from user land, thus the need for this driver. In the future, the support for old
 Linux versions may be dropped, and this driver won't be needed.
