@@ -38,8 +38,17 @@ static void __enable_fsgsbase(void* v) {
 #endif
 }
 
+static void __disable_fsgsbase(void* v) {
+#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 0, 0)
+    write_cr4(read_cr4() & ~X86_CR4_FSGSBASE);
+#else
+    cr4_clear_bits(X86_CR4_FSGSBASE);
+    __write_cr4(__read_cr4() & ~X86_CR4_FSGSBASE);
+#endif
+}
+
 int gsgx_open(struct inode* inode, struct file* file) {
-    on_each_cpu(__enable_fsgsbase, NULL, 1);
+    /* noop, only to prevent kernel from rmmod gsgx.ko */
     return 0;
 }
 
@@ -65,10 +74,14 @@ static int gsgx_setup(void) {
         return ret;
     }
 
+    on_each_cpu(__enable_fsgsbase, NULL, 1);
+
     return 0;
 }
 
 static void gsgx_teardown(void) {
+    on_each_cpu(__disable_fsgsbase, NULL, 1);
+
     if (gsgx_dev.this_device)
         misc_deregister(&gsgx_dev);
 }
