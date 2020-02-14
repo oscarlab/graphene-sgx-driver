@@ -1,6 +1,6 @@
 /*
- * (C) Copyright 2015 Intel Corporation
- * Author: Chia-Che Tsai <chiache-che.tsai@intel.com>
+ * (C) Copyright 2020 Intel Corporation
+ * Author: Dmitrii Kuvaiskii <dmitrii.kuvaiskii@intel.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -9,9 +9,9 @@
  */
 
 /*
- * The only action this driver does is to enable FSGSBASE instruction in user
- * space, see __enable_fsgsbase(). Older Linux versions do not allow to enable
- * this instruction from userland, thus the need for this driver.
+ * The only action this driver does is enabling FSGSBASE instruction in user
+ * space, see __enable_fsgsbase(). Current Linux versions do not allow enabling
+ * this instruction from user land, thus the need for this driver.
  */
 
 #include <asm/tlbflush.h>
@@ -26,7 +26,7 @@
 #define DRV_VERSION     "0.10"
 
 MODULE_DESCRIPTION(DRV_DESCRIPTION);
-MODULE_AUTHOR("Chia-Che Tsai <chia-che.tsai@intel.com>");
+MODULE_AUTHOR("Dmitrii Kuvaiskii <dmitrii.kuvaiskii@intel.com>");
 MODULE_VERSION(DRV_VERSION);
 
 static void __enable_fsgsbase(void* v) {
@@ -64,7 +64,6 @@ static int gsgx_setup(void) {
     ret = misc_register(&gsgx_dev);
     if (ret) {
         pr_err("misc_register() failed\n");
-        gsgx_dev.this_device = NULL;
         return ret;
     }
 
