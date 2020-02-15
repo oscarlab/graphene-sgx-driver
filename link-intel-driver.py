@@ -38,6 +38,8 @@ def main():
 
     with open(this_header_path, 'a') as f:
         f.write('\n\n#ifndef ISGX_FILE\n#define ISGX_FILE "%s"\n#endif\n' % dev_path)
+        if dev_path == '/dev/sgx':
+            f.write('\n\n#ifndef SGX_DCAP\n#define SGX_DCAP 1\n#endif\n')
 
 
 if __name__ == "__main__":

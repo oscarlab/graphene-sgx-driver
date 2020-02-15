@@ -21,9 +21,9 @@ Additionally, this repository contains the script ``link-intel-driver.py`` to fi
 required C header from the Intel SGX driver installed on the system. The supported versions of the
 Intel SGX driver are:
 
-- DCAP driver <https://github.com/intel/SGXDataCenterAttestationPrimitives>
+- DCAP driver, only versions 1.5- <https://github.com/intel/SGXDataCenterAttestationPrimitives>
+  (please note that the most recent master branch is known to be *incompatible* with Graphene)
 - Older out-of-tree non-DCAP driver, only versions 1.9+ <https://github.com/intel/linux-sgx-driver>
-
 
 To install the Graphene SGX driver, please run::
 
