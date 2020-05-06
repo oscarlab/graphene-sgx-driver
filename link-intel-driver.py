@@ -3,14 +3,17 @@
 import sys, os, shutil
 
 DRIVER_VERSIONS = {
-        'sgx_user.h':             '/dev/isgx',
-        'include/uapi/asm/sgx.h': '/dev/sgx',
+        'sgx_user.h':                 '/dev/isgx',
+        'include/uapi/asm/sgx.h':     '/dev/sgx',
+        'include/uapi/asm/sgx_oot.h': '/dev/sgx/enclave',
 }
 
 def find_intel_sgx_driver():
     """
     Graphene only needs one header from the Intel SGX Driver:
-      - include/uapi/asm/sgx.h for DCAP version of the driver
+      - include/uapi/asm/sgx_oot.h for DCAP 1.6+ version of the driver
+        (https://github.com/intel/SGXDataCenterAttestationPrimitives)
+      - include/uapi/asm/sgx.h for DCAP 1.5- version of the driver
         (https://github.com/intel/SGXDataCenterAttestationPrimitives)
       - sgx_user.h for non-DCAP, older version of the driver
         (https://github.com/intel/linux-sgx-driver)
@@ -38,8 +41,10 @@ def main():
 
     with open(this_header_path, 'a') as f:
         f.write('\n\n#ifndef ISGX_FILE\n#define ISGX_FILE "%s"\n#endif\n' % dev_path)
-        if dev_path == '/dev/sgx':
+        if dev_path == '/dev/sgx' or dev_path == '/dev/sgx/enclave':
             f.write('\n\n#ifndef SGX_DCAP\n#define SGX_DCAP 1\n#endif\n')
+        if dev_path == '/dev/sgx/enclave':
+            f.write('\n\n#ifndef SGX_DCAP_16_OR_LATER\n#define SGX_DCAP_16_OR_LATER 1\n#endif\n')
 
 
 if __name__ == "__main__":
