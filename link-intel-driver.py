@@ -46,6 +46,12 @@ def main():
         if dev_path == '/dev/sgx/enclave':
             f.write('\n\n#ifndef SGX_DCAP_NEW\n#define SGX_DCAP_NEW 1\n#endif\n')
 
+    this_libraries_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'libraries')
+    with open(this_libraries_path, 'w') as f:
+        if dev_path == '/dev/sgx' or dev_path == '/dev/sgx/enclave':
+            f.write('-lsgx_dcap_ql')
+        else:
+            f.write('')  # don't need any additional libraries for old driver
 
 if __name__ == "__main__":
     sys.exit(main())
