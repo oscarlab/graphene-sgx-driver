@@ -48,7 +48,8 @@ def main():
 
     this_libraries_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'libraries')
     with open(this_libraries_path, 'w') as f:
-        if dev_path == '/dev/sgx' or dev_path == '/dev/sgx/enclave':
+        if (os.path.exists('/usr/lib/x86_64-linux-gnu/libsgx_dcap_ql.so') and
+                (dev_path == '/dev/sgx' or dev_path == '/dev/sgx/enclave')):
             f.write('-lsgx_dcap_ql')
         else:
             f.write('')  # don't need any additional libraries for old driver
