@@ -44,7 +44,7 @@ def main():
         if dev_path == '/dev/sgx' or dev_path == '/dev/sgx/enclave':
             f.write('\n\n#ifndef SGX_DCAP\n#define SGX_DCAP 1\n#endif\n')
         if dev_path == '/dev/sgx/enclave':
-            f.write('\n\n#ifndef SGX_DCAP_NEW\n#define SGX_DCAP_NEW 1\n#endif\n')
+            f.write('\n\n#ifndef SGX_DCAP_16_OR_LATER\n#define SGX_DCAP_16_OR_LATER 1\n#endif\n')
 
 
 if __name__ == "__main__":
