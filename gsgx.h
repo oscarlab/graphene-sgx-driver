@@ -1,7 +1,4 @@
 /*
- * (C) Copyright 2020 Intel Corporation
- * Author: Dmitrii Kuvaiskii <dmitrii.kuvaiskii@intel.com>
- *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; version 2
