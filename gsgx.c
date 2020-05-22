@@ -1,7 +1,4 @@
 /*
- * (C) Copyright 2020 Intel Corporation
- * Author: Dmitrii Kuvaiskii <dmitrii.kuvaiskii@intel.com>
- *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; version 2
@@ -12,6 +9,10 @@
  * The only action this driver does is enabling FSGSBASE instruction in user
  * space, see __enable_fsgsbase(). Current Linux versions do not allow enabling
  * this instruction from user land, thus the need for this driver.
+ *
+ * WARNING: This is a workaround to enable modifying FS/GS registers inside SGX
+ * enclaves. This driver affects the whole system and should not be used in
+ * production environments.
  */
 
 #include <asm/tlbflush.h>
@@ -26,7 +27,6 @@
 #define DRV_VERSION     "0.10"
 
 MODULE_DESCRIPTION(DRV_DESCRIPTION);
-MODULE_AUTHOR("Dmitrii Kuvaiskii <dmitrii.kuvaiskii@intel.com>");
 MODULE_VERSION(DRV_VERSION);
 
 static void __enable_fsgsbase(void* v) {
