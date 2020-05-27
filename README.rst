@@ -19,6 +19,14 @@ Linux versions do not allow enabling this instruction from user land, thus the
 need for this driver. In the future, when support for it will be added to Linux,
 this driver won't be needed.
 
+**Warning: This module shouldn't be used on production as it introduces a local
+privilege escalation vulnerability. Enabling FSGSBASE properly is a much more
+complex task and most likely can't be achieved in an out-of-tree driver. If
+you're interested in having this feature in production, you should test the
+kernel patchset which is currently being upstreamed (the most recent version at
+the time of writing:
+https://lore.kernel.org/lkml/20200511045311.4785-1-sashal@kernel.org/)**
+
 Additionally, this repository contains the script ``link-intel-driver.py`` to
 find and copy the required C header from the Intel SGX driver installed on the
 system. The supported versions of the Intel SGX driver are:
