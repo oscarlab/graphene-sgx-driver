@@ -14,6 +14,8 @@
  * this instruction from user land, thus the need for this driver.
  */
 
+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+
 #include <asm/tlbflush.h>
 #include <linux/fs.h>
 #include <linux/kernel.h>
@@ -83,11 +85,14 @@ static int __init gsgx_init(void) {
     int ret;
 
     pr_info(DRV_DESCRIPTION " v" DRV_VERSION "\n");
-    pr_crit("*************************************************************\n");
-    pr_crit("*** WARNING: This module should not be used in production ***\n");
-    pr_crit("*** as it allows local privilege escalation. For more     ***\n");
-    pr_crit("*** information see the included README.rst.              ***\n");
-    pr_crit("*************************************************************\n");
+    pr_emerg("********************************************************************\n");
+    pr_emerg("*** You have loaded a module that is intended only for research  ***\n");
+    pr_emerg("*** and development, and not for use on any production system.   ***\n");
+    pr_emerg("*** This module is known to allow unprivileged applications to   ***\n");
+    pr_emerg("*** gain full control of the operating system kernel. If this is ***\n");
+    pr_emerg("*** a production system you should shut down immediately.        ***\n");
+    pr_emerg("*** For more information see the included README.rst.            ***\n");
+    pr_emerg("********************************************************************\n");
 
     if (!boot_cpu_has(X86_FEATURE_FSGSBASE)) {
         pr_err("FSGSBASE feature required by Graphene is not supported by this CPU!\n");
