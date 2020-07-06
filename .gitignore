@@ -1,5 +1,7 @@
 *.o.cmd
 *.ko.cmd
+*.order.cmd
+*.symvers.cmd
 *.o
 *.o.ur-safe
 *.ko
