@@ -14,7 +14,7 @@ endif
 
 .PHONY: clean
 clean:
-	$(RM) -r *.o *.ko *.order *.symvers *.mod.c .tmp_versions .*o.cmd .cache.mk *.o.ur-safe *.mod .gsgx.mod.cmd .Module.order.cmd .modules.symvers.cmd
+	$(RM) -r *.o *.ko *.order *.symvers *.mod.c .tmp_versions .*o.cmd .cache.mk *.o.ur-safe *.mod .gsgx.mod.cmd .modules.order.cmd .Module.symvers.cmd
 
 .PHONY: distclean
 distclean: clean
