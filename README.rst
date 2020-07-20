@@ -25,9 +25,10 @@ complex task and most likely can't be achieved in an out-of-tree driver. If
 you're interested in having this feature in production, you should test the
 kernel patchset which is currently being upstreamed (the most recent version at
 the time of writing:
-https://lore.kernel.org/lkml/20200511045311.4785-1-sashal@kernel.org/).
+https://lore.kernel.org/linux-doc/20200528201402.1708239-1-sashal@kernel.org/).
 Alternatively, you should use the patchset provided in this repository, which
-is the backport for Linux kernel 5.4 LTS.**
+is the backport for Linux kernel 5.4 LTS (based on the upstream patchset v13
+from 28 May 2020).**
 
 Additionally, this repository contains the script ``link-intel-driver.py`` to
 find and copy the required C header from the Intel SGX driver installed on the
