@@ -6,11 +6,14 @@ DRIVER_VERSIONS = {
         'sgx_user.h':                 '/dev/isgx',
         'include/uapi/asm/sgx.h':     '/dev/sgx',
         'include/uapi/asm/sgx_oot.h': '/dev/sgx/enclave',
+        'sgx_in_kernel.h':            '/dev/sgx/enclave',
 }
 
 def find_intel_sgx_driver():
     """
     Graphene only needs one header from the Intel SGX Driver:
+      - default sgx_in_kernel.h for in-kernel 32+ version of the driver
+        (https://lore.kernel.org/linux-sgx/20200716135303.276442-1-jarkko.sakkinen@linux.intel.com)
       - include/uapi/asm/sgx_oot.h for DCAP 1.6+ version of the driver
         (https://github.com/intel/SGXDataCenterAttestationPrimitives)
       - include/uapi/asm/sgx.h for DCAP 1.5- version of the driver
@@ -22,7 +25,12 @@ def find_intel_sgx_driver():
     """
     isgx_driver_path = os.getenv("ISGX_DRIVER_PATH")
     if not isgx_driver_path:
-        isgx_driver_path = os.path.expanduser(input('Enter the Intel SGX driver dir with C headers: '))
+        msg = 'Enter the Intel SGX driver dir with C headers (or press ENTER for in-kernel driver): '
+        isgx_driver_path = os.path.expanduser(input(msg))
+
+    if not isgx_driver_path or isgx_driver_path.strip() == '':
+        # user did not specify any driver path, use default in-kernel driver's C header
+        isgx_driver_path = os.path.dirname(os.path.abspath(__file__))
 
     for header_path, dev_path in DRIVER_VERSIONS.items():
         abs_header_path = os.path.abspath(os.path.join(isgx_driver_path, header_path))
