@@ -13,7 +13,7 @@ def find_intel_sgx_driver():
     """
     Graphene only needs one header from the Intel SGX Driver:
       - default sgx_in_kernel.h for in-kernel 32+ version of the driver
-        (https://lkml.org/lkml/2020/7/16/622)
+        (https://lore.kernel.org/linux-sgx/20200716135303.276442-1-jarkko.sakkinen@linux.intel.com)
       - include/uapi/asm/sgx_oot.h for DCAP 1.6+ version of the driver
         (https://github.com/intel/SGXDataCenterAttestationPrimitives)
       - include/uapi/asm/sgx.h for DCAP 1.5- version of the driver
@@ -28,7 +28,7 @@ def find_intel_sgx_driver():
         msg = 'Enter the Intel SGX driver dir with C headers (or press ENTER for in-kernel driver): '
         isgx_driver_path = os.path.expanduser(input(msg))
 
-    if not isgx_driver_path or isgx_driver_path.strip() == "":
+    if not isgx_driver_path or isgx_driver_path.strip() == '':
         # user did not specify any driver path, use default in-kernel driver's C header
         isgx_driver_path = os.path.dirname(os.path.abspath(__file__))
 

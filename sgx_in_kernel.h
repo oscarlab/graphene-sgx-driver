@@ -2,6 +2,10 @@
 /*
  * Copyright(c) 2016-19 Intel Corporation.
  */
+
+/* TODO: Graphene must remove this file after Intel SGX driver is upstreamed
+ *       and this header is distributed with the system */
+
 #ifndef _UAPI_ASM_X86_SGX_H
 #define _UAPI_ASM_X86_SGX_H
 
