@@ -12,3 +12,4 @@ Module.symvers
 modules.order
 .tmp_versions
 sgx.h
+.cache.mk
