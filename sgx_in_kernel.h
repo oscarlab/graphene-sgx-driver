@@ -4,7 +4,10 @@
  */
 
 /* TODO: Graphene must remove this file after Intel SGX driver is upstreamed
- *       and this header is distributed with the system */
+ *       and this header is distributed with the system. This header was tested
+ *       with driver versions 32 and 36, it *may* be out of sync with newer
+ *       versions. If possible, use the header found on the system instead of
+ *       this one. */
 
 #ifndef _UAPI_ASM_X86_SGX_H
 #define _UAPI_ASM_X86_SGX_H
