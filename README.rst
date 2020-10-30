@@ -35,8 +35,7 @@ find and copy the required C header from the Intel SGX driver installed on the
 system. The supported versions of the Intel SGX driver are:
 
 - In-kernel SGX driver, only versions 32+ (https://lore.kernel.org/linux-sgx/20200716135303.276442-1-jarkko.sakkinen@linux.intel.com)
-- DCAP driver, newer versions 1.6+ (https://github.com/intel/SGXDataCenterAttestationPrimitives)
-- DCAP driver, older versions 1.5- (https://github.com/intel/SGXDataCenterAttestationPrimitives)
+- DCAP driver, only versions 1.6+ (https://github.com/intel/SGXDataCenterAttestationPrimitives)
 - Older out-of-tree non-DCAP driver, only versions 1.9+ (https://github.com/intel/linux-sgx-driver)
 
 To install the Graphene SGX driver, please run:

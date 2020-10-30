@@ -4,22 +4,22 @@ import sys, os, shutil
 
 DRIVER_VERSIONS = {
         'sgx_user.h':                 '/dev/isgx',
-        'include/uapi/asm/sgx.h':     '/dev/sgx',
         'include/uapi/asm/sgx_oot.h': '/dev/sgx/enclave',
+        'include/uapi/asm/sgx.h':     '/dev/sgx/enclave',
         'sgx_in_kernel.h':            '/dev/sgx/enclave',
 }
 
 def find_intel_sgx_driver():
     """
     Graphene only needs one header from the Intel SGX Driver:
-      - default sgx_in_kernel.h for in-kernel 32+ version of the driver
-        (https://lore.kernel.org/linux-sgx/20200716135303.276442-1-jarkko.sakkinen@linux.intel.com)
-      - include/uapi/asm/sgx_oot.h for DCAP 1.6+ version of the driver
-        (https://github.com/intel/SGXDataCenterAttestationPrimitives)
-      - include/uapi/asm/sgx.h for DCAP 1.5- version of the driver
-        (https://github.com/intel/SGXDataCenterAttestationPrimitives)
       - sgx_user.h for non-DCAP, older version of the driver
         (https://github.com/intel/linux-sgx-driver)
+      - include/uapi/asm/sgx_oot.h for DCAP 1.6+ version of the driver
+        (https://github.com/intel/SGXDataCenterAttestationPrimitives)
+      - include/uapi/asm/sgx.h for in-kernel 20+ version of the driver
+        (https://lore.kernel.org/linux-sgx/20190417103938.7762-1-jarkko.sakkinen@linux.intel.com/)
+      - default sgx_in_kernel.h for in-kernel 32+ version of the driver
+        (https://lore.kernel.org/linux-sgx/20200716135303.276442-1-jarkko.sakkinen@linux.intel.com)
 
     This function returns the required header from the SGX driver.
     """
